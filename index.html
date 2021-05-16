@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Simulador de Autômatos - UNIARA</title>
+</head>
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/basicCSS.css">
+  <script src="js/jquery-1.10.2.js"></script>
+  <script src="js/jquery-1.10.2.min.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/modernizr-2.6.2.js"></script>
+  <script src="js/bootstrap-notify.js"></script>
+  <script src="js/simulator.js"></script>
+  
+  
+  <script src="js/pixi.js"></script>
+  <script src="js/Controller.js"></script>
+  <script src="js/View.js"></script>
+  <script src="js/Modal.js"></script>
+<body>
+  <header>
+    <center><h2>Simulador de Autômatos - Universidade de Araraquara - UNIARA</h2></center>
+  </header>
+
+<canvas id="myCanvas">
+Your browser does not support the HTML5 canvas tag.</canvas><br>
+
+
+
+
+
+  <script type="text/javascript">
+    var type = "WebGL"
+    if(!PIXI.utils.isWebGLSupported()){
+      type = "canvas"
+    }
+
+    PIXI.utils.sayHello(type)
+	StartRender();
+  </script>
+<br>
+
+<div class="buttons">
+<button id="NormalTool" onclick="selectTool(0);">Normal</button>
+<button id="RemoveTool" onclick="selectTool(2);">Deletar</button>
+<button id="BeginTool" onclick="selectTool(3);">Inico</button>
+<button id="EndTool" onclick="selectTool(4);">Fim</button>
+<input id="SimulateInput" size="20" type="text"/>
+<button id="TestButton" onclick="simulate();" >Testar Palavra</button>
+<button id="TestButton" onclick="help();" >Dúvidas</button>
+<button id="PlayTool" onclick="PlayButton();" style="display: none;">⏹️</button>
+<button id="ForthTool" onclick="stepFowardSimulate();" style="display: none;">>>></button>
+<button id="ExitTool" onclick="stopSimulating(3);" style="display: none;">X</button>
+</div>
+
+<div class="buttons2">
+<button id="NormalTool" style="width:40px" onclick="zoom(MainSize*1.5)">+</button>
+<button id="RemoveTool" style="width:40px" onclick="zoom(MainSize/1.5)">-</button>
+</div>
+
+<div class="LetterLabel">
+<label id="LT1" ></label>
+<label id="LT2" ></label>
+<label id="LT3" ></label>
+</div>
+
+
+
+<div class="container">
+  <div class="modal fade" id="myModal" role="dialog" >
+    <div class="modal-dialog" >
+    
+      <div class="modal-content" ><!--style="width: 50%;"-->
+        <div class="modal-header">
+          <button type="button" onclick="CloseModal();" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Símbolos</h4>
+        </div>
+        <div class="modal-body">
+           <div class="input-group">
+              <span class="input-group-addon">Símbolo </span>  
+              <input type="text"  id = "txtAlpha"class="form-control" maxlength="1" name="txtAlpha" onkeydown="search(this)">
+              <div class="input-group-btn">
+                <button class="btn btn-primary" onclick="AddTableRow()" type="button">Add</button>
+              </div>
+           </div>
+           
+           <br><br>
+           <table id="tableSimbol" class="table table-bordered">    
+              <tbody>    
+                <tr>      
+                  <th> </th>      
+                  <th>Símbolo</th>   
+                  <th>Ação</th>    
+                </tr>        
+              </tbody>     
+            </table>
+        </div>
+        <label id="idAlpha" style="display: none;">0</label>
+        <div class="modal-footer">
+          <button type="button" onclick="CloseModal();" class="btn btn-default" data-dismiss="modal">Finalizar</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+<script>
+document.querySelector("#txtAlpha").addEventListener("keyup", function(event) {
+	if(event.keyIdentifier !== "Enter") return; // Use `.key` instead.
+	AddTableRow(); // Things you want to do.
+    event.preventDefault(); // No need to `return false;`.
+});
+$("#myModal").on("hidden.bs.modal", function () {
+  CloseModal();
+});
+</script>
+
+</body>
+
+</html>
